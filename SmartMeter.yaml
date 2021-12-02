@@ -1,0 +1,109 @@
+---
+components:
+  schemas:
+    SmartMeter:
+      allOf:
+        - $ref: "https://raw.githubusercontent.com/smart-data-models/dataModel.Device/1c41e5128a54d7b67bf51f3a7daba3c72f497aa0/SmartMeteringObservation/model.yaml"
+      properties:
+        power:
+          $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/power
+        waterConsumption:
+          $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/waterConsumption
+        gasConsumption:
+          $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/gasConsumption
+    
+    TotalPower:
+      type: object
+      required:
+        - power
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      description: >
+        frei
+      properties:
+        power:
+          $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/power
+
+    WaterPulse:
+      type: object
+      required:
+        - waterConsumption
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      description: >
+        frei
+      properties:
+         waterConsumption:
+          $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/waterConsumption
+
+    WaterAVGRate:
+      type: object
+      required:
+        - waterConsumption
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      description: >
+        frei
+      properties:
+         waterConsumption:
+          $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/waterConsumption
+   
+    WaterInstantRate:
+      type: object
+      required:
+        - waterConsumption
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      description: >
+        frei
+      properties:
+         waterConsumption:
+          $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/waterConsumption
+      
+    GasPulse:
+      type: object
+      required:
+        - gasConsumption
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      description: >
+        frei
+      properties:
+         gasConsumption:
+          $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/gasConsumption
+
+    GasAVGRate:
+      type: object
+      required:
+        - gasConsumption
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      description: >
+        frei
+      properties:
+         gasConsumption:
+          $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/gasConsumption
+   
+    GasInstantRate:
+      type: object
+      required:
+        - gasConsumption
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      description: >
+        frei
+      properties:
+         gasConsumption:
+          $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/gasConsumption
+
+paths: 
+  /ngsi-ld/v1/entities: 
+    get: 
+      responses: 
+        ? "200"
+        : 
+          description:  OK
+          content: 
+            application/ld+json: 
+              schema: 
+                type: object

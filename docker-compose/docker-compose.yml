@@ -1,0 +1,86 @@
+version: '3.8'
+services:
+  ld-context:
+    image: httpd
+    hostname: context
+    networks:
+        - default
+    ports:
+        - "3004:80"
+    volumes:
+        - "/home/mike/DGE/docker-compose/data-model/:/usr/local/apache2/htdocs/"
+  orion:
+    image: fiware/orion-ld:latest
+    command: -dbhost orion-db
+    networks:
+      - default
+    ports:
+      - "1026:1026"
+    environment:
+      - TZ=Europe/Berlin
+  iota-mqtt:
+    image: fiware/iotagent-ul:latest
+    networks:
+      - default
+    expose:
+      - "4041"
+      - "7896"
+    ports:
+      - "4041:4041"
+      - "7896:7896"
+    environment:
+      - TZ=Europe/Berlin
+      - IOTA_CB_HOST=orion
+      - IOTA_CB_PORT=1026
+      - IOTA_NORTH_PORT=4041
+      - IOTA_HTTP_PORT=7896
+      - IOTA_JSON_LD_CONTEXT=http://context/ngsi-context.jsonld
+      - IOTA_CB_NGSI_VERSION=ld
+      - IOTA_DEFAULT_RESOURCE=/iot/d
+      - IOTA_REGISTRY_TYPE=memory
+      - IOTA_PROVIDER_URL=http://iota-mqtt:4041
+      - IOTA_MQTT_PROTOCOL=mqtts
+      - IOTA_MQTT_HOST=mqtt.scilabs.de
+      - IOTA_MQTT_PORT=8883
+      - IOTA_MQTT_CA=/ca.pem
+      - IOTA_MQTT_USERNAME=dge
+      - IOTA_MQTT_PASSWORD=gNKWqGxdQFARvARa5CcS
+      - IOTA_MQTT_QOS=2
+    volumes:
+    #  - "/home/mike/DGE/MQTTBinding.js:/opt/iotaul/lib/bindings/MQTTBinding.js"
+      - "/home/mike/DGE/ca.pem:/ca.pem"
+  orion-db:
+    image: mongo:4.4
+    networks:
+      - default
+    environment:
+      - TZ=Europe/Berlin
+  crate-db:
+      image: crate:latest
+      hostname: crate-db
+      ports:
+          - "4200:4200"
+          - "4300:4300"
+      command:
+          crate -Cauth.host_based.enabled=false -Ccluster.name=democluster -Chttp.cors.enabled=true -Chttp.cors.allow-origin="*"
+      environment:
+          - CRATE_HEAP_SIZE=2g
+  quantumleap:
+      image: smartsdk/quantumleap
+      hostname: quantumleap
+      ports:
+          - "8668:8668"
+      depends_on:
+          - crate-db
+      environment:
+          - CRATE_HOST=crate-db
+  grafana:
+    image: grafana/grafana
+    depends_on:
+        - crate-db
+    ports:
+        - "3003:3000"
+    environment:
+        - GF_INSTALL_PLUGINS=https://github.com/orchestracities/grafana-map-plugin/archive/master.zip;grafana-map-plugin,grafana-clock-panel,grafana-worldmap-panel
+networks:
+  default: ~

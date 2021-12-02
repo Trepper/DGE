@@ -1,0 +1,476 @@
+{
+    "@context": {
+        "type": "@type",
+        "id": "@id",
+        "ngsi-ld": "https://uri.etsi.org/ngsi-ld/",
+        "fiware": "https://uri.fiware.org/ns/data-models#",
+        "schema": "https://schema.org/",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "GasAVGRate": "fiware:GasAVGRate",
+        "GasInstantRate": "fiware:GasInstantRate",
+        "GasPulse": "fiware:GasPulse",
+        "HVAC": "https://w3id.org/saref#HVAC",
+        "SmartMeter": "https://wiki.openstreetmap.org/wiki/Tag:building%3DSmartMeter",
+        "TotalPower": "fiware:TotalPower",
+        "WaterAVGRate": "fiware:WaterAVGRate",
+        "WaterInstantRate": "fiware:WaterInstantRate",
+        "WaterPulse": "fiware:WaterPulse",
+        "actuator": "https://w3id.org/saref#actuator",
+        "batteryLevel": {
+            "@id": "fiware:batteryLevel",
+            "@type": "xsd:number"
+        },
+        "category": {
+            "@id": "fiware:category",
+            "@type": "@vocab"
+        },
+        "configuration": {
+            "@id": "fiware:configuration",
+            "@type": "xsd:string"
+        },
+        "controlledAsset": {
+            "@id": "fiware:controlledAsset",
+            "@type": "@id"
+        },
+        "controlledProperty": {
+            "@id": "fiware:controlledProperty",
+            "@type": "@vocab"
+        },
+        "dataProvider": {
+            "@id": "fiware:dataProvider",
+            "@type": "xsd:string"
+        },
+        "dateCreated": {
+            "@id": "fiware:dateCreated",
+            "@type": "xs:dateTime"
+        },
+        "dateFirstUsed": {
+            "@id": "fiware:dateFirstUsed",
+            "@type": "xs:dateTime"
+        },
+        "dateInstalled": {
+            "@id": "fiware:dateInstalled",
+            "@type": "xs:dateTime"
+        },
+        "dateLastCalibration": {
+            "@id": "fiware:dateLastCalibration",
+            "@type": "xs:dateTime"
+        },
+        "dateLastValueReported": {
+            "@id": "fiware:dateLastValueReported",
+            "@type": "xs:dateTime"
+        },
+        "dateManufactured": {
+            "@id": "fiware:dateManufactured",
+            "@type": "xs:dateTime"
+        },
+        "dateModified": {
+            "@id": "fiware:dateModified",
+            "@type": "xs:dateTime"
+        },
+        "description": {
+            "@id": "ngsi-ld:description",
+            "@type": "xsd:string"
+        },
+        "deviceState": {
+            "@id": "fiware:deviceState",
+            "@type": "xsd:string"
+        },
+        "endgun": "https://w3id.org/saref#endgun",
+        "fillingLevel": "https://w3id.org/saref#fillingLevel",
+        "firmwareVersion": {
+            "@id": "fiware:firmwareVersion",
+            "@type": "xsd:string"
+        },
+        "gasConsumption": "https://w3id.org/saref#gasConsumption",
+        "hardwareVersion": {
+            "@id": "fiware:hardwareVersion",
+            "@type": "xsd:string"
+        },
+        "implement": "https://w3id.org/saref#implement",
+        "ipAddress": {
+            "@id": "fiware:ipAddress",
+            "@type": "xsd:string"
+        },
+        "irrSection": "https://w3id.org/saref#irrSection",
+        "irrSystem": "https://w3id.org/saref#irrSystem",
+        "location": "https://w3id.org/saref#location",
+        "macAddress": {
+            "@id": "fiware:macAddress",
+            "@type": "xsd:string"
+        },
+        "mcc": {
+            "@id": "fiware:mcc",
+            "@type": "xsd:string"
+        },
+        "meter": "https://w3id.org/saref#meter",
+        "mnc": {
+            "@id": "fiware:mnc",
+            "@type": "xsd:string"
+        },
+        "multimedia": "https://w3id.org/saref#multimedia",
+        "name": {
+            "@id": "ngsi-ld:name",
+            "@type": "xsd:string"
+        },
+        "network": "https://w3id.org/saref#network",
+        "osVersion": {
+            "@id": "fiware:osVersion",
+            "@type": "xsd:string"
+        },
+        "owner": {
+            "@id": "fiware:owner",
+            "@type": "@id"
+        },
+        "power": "https://w3id.org/saref#power",
+        "provider": {
+            "@id": "fiware:provider",
+            "@type": "xsd:string"
+        },
+        "refDeviceModel": {
+            "@id": "fiware:refDeviceModel",
+            "@type": "@id"
+        },
+        "rssi": {
+            "@id": "fiware:rssi",
+            "@type": "xsd:string"
+        },
+        "sensor": "https://w3id.org/saref#sensor",
+        "serialNumber": {
+            "@id": "fiware:serialNumber",
+            "@type": "xsd:string"
+        },
+        "softwareVersion": {
+            "@id": "fiware:softwareVersion",
+            "@type": "xsd:string"
+        },
+        "source": {
+            "@id": "fiware:source",
+            "@type": "xsd:string"
+        },
+        "supportedProtocol": {
+            "@id": "fiware:supportedProtocol",
+            "@type": "@vocab"
+        },
+        "value": {
+            "@id": "fiware:value",
+            "@type": "xsd:string"
+        },
+        "waterConsumption": "https://w3id.org/saref#waterConsumption"
+    },
+    "@graph": [
+        {
+            "@id": "fiware:SmartMeter",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": ""
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "SmartMeter"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:TotalPower",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "frei"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "TotalPower"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:WaterPulse",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "frei"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "WaterPulse"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:WaterAVGRate",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "frei"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "WaterAVGRate"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:WaterInstantRate",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "frei"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "WaterInstantRate"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:GasPulse",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "frei"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "GasPulse"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:GasAVGRate",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "frei"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "GasAVGRate"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:GasInstantRate",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "frei"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "GasInstantRate"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:power",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Property related to some measurements that are characterized by a certain value that is measured in a power unit (such as watt or kilowatt). Further specializations of the saref:Power class can be found in the SAREF4ENER extension, where classes such as PowerMax, PowerMin and PowerExpected are defined."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "power"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:waterConsumption",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An individual representing the property water consumption."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "waterConsumption"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:gasConsumption",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An individual representing the property gas consumption."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "gasConsumption"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:power",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Property related to some measurements that are characterized by a certain value that is measured in a power unit (such as watt or kilowatt). Further specializations of the saref:Power class can be found in the SAREF4ENER extension, where classes such as PowerMax, PowerMin and PowerExpected are defined."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "power"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:waterConsumption",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An individual representing the property water consumption."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "waterConsumption"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:waterConsumption",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An individual representing the property water consumption."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "waterConsumption"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:waterConsumption",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An individual representing the property water consumption."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "waterConsumption"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:gasConsumption",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An individual representing the property gas consumption."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "gasConsumption"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:gasConsumption",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An individual representing the property gas consumption."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "gasConsumption"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:gasConsumption",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An individual representing the property gas consumption."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "gasConsumption"
+                }
+            ]
+        }
+    ]
+}
