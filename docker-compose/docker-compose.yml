@@ -8,7 +8,7 @@ services:
     ports:
         - "3004:80"
     volumes:
-        - "/home/mike/DGE/docker-compose/data-model/:/usr/local/apache2/htdocs/"
+        - "/home/lpekruhl/Studium/DGE/docker-compose/data-model/:/usr/local/apache2/htdocs/"
   orion:
     image: fiware/orion-ld:latest
     command: -dbhost orion-db
@@ -47,8 +47,8 @@ services:
       - IOTA_MQTT_PASSWORD=gNKWqGxdQFARvARa5CcS
       - IOTA_MQTT_QOS=2
     volumes:
-    #  - "/home/mike/DGE/MQTTBinding.js:/opt/iotaul/lib/bindings/MQTTBinding.js"
-      - "/home/mike/DGE/ca.pem:/ca.pem"
+      - "/home/lpekruhl/Studium/DGE/MQTTBinding.js:/opt/iotaul/lib/bindings/MQTTBinding.js"
+      - "/home/lpekruhl/Studium/DGE/ca.pem:/ca.pem"
   orion-db:
     image: mongo:4.4
     networks:
