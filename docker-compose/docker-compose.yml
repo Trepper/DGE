@@ -47,7 +47,7 @@ services:
       - IOTA_MQTT_PASSWORD=gNKWqGxdQFARvARa5CcS
       - IOTA_MQTT_QOS=2
     volumes:
-    #  - "/home/mike/DGE/MQTTBinding.js:/opt/iotaul/lib/bindings/MQTTBinding.js"
+      - "/home/mike/DGE/MQTTBinding.js:/opt/iotaul/lib/bindings/MQTTBinding.js"
       - "/home/mike/DGE/ca.pem:/ca.pem"
   orion-db:
     image: mongo:4.4
