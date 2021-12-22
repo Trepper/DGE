@@ -6,40 +6,16 @@
 curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
 -H 'Content-Type: application/ld+json' \
 --data-raw '{
-    "id": "urn:ngsi-ld:SM:smartmeter1",
-    "type": "SM",
+    "id": "urn:ngsi-ld:SmartMeter:smartmeter1",
+    "type": "SmartMeter",
     "category": {
         "type": "Property",
-        "value": ["smartmeter"]
-    },
-    "address": {
-        "type": "Property",
-        "value": {
-            "streetAddress": "Bruno-Danek-Weg 2",
-            "addressRegion": "Herne",
-            "addressLocality": "Testhaus",
-            "postalCode": "44627"
-        },
-        "verified": {
-            "type": "Property",
-            "value": true
-        }
-    },
-    "location": {
-        "type": "GeoProperty",
-        "value": {
-             "type": "Point",
-             "coordinates": [7.258140, 51.543611]
-        }
-    },
-    "name": {
-        "type": "Property",
-        "value": "Elektrohaus 2"
+        "value": ["smartmeter1"]
     },
     "@context": "http://context/ngsi-context.jsonld"
 }'
 
-curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:SM:smartmeter1' \
+curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:SmartMeter:smartmeter1' \
 -H 'Accept: application/ld+json' \
 -H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
 
@@ -72,7 +48,7 @@ curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
             "type": "Property",
             "value": "sensor"
       },
-      "power": {
+      "waterConsumption": {
             "type": "Property",
             "value": 25,
             "unitCode": "L"
@@ -85,7 +61,7 @@ curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
             "type": "Property",
             "value": "sensor"
       },
-      "power": {
+      "waterConsumption": {
             "type": "Property",
             "value": 25,
             "unitCode": "L"
@@ -98,7 +74,7 @@ curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
             "type": "Property",
             "value": "sensor"
       },
-      "power": {
+      "waterConsumption": {
             "type": "Property",
             "value": 25,
             "unitCode": "L"
@@ -111,7 +87,7 @@ curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
             "type": "Property",
             "value": "sensor"
       },
-      "fillingLevel": {
+      "gasConsumption": {
             "type": "Property",
             "value": 25,
             "unitCode": "dm3"
@@ -124,7 +100,7 @@ curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
             "type": "Property",
             "value": "sensor"
       },
-      "electricityConsumption": {
+      "gasConsumption": {
             "type": "Property",
             "value": 25,
             "unitCode": "dm3"
@@ -137,7 +113,7 @@ curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
             "type": "Property",
             "value": "sensor"
       },
-      "electricityConsumption": {
+      "gasConsumption": {
             "type": "Property",
             "value": 25,
             "unitCode": "dm3"
@@ -159,37 +135,37 @@ curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
     {
         "id": "urn:ngsi-ld:pt",
         "type": "WATT",
-        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SM:smartmeter1"}
+        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SmartMeter:smartmeter1"}
     },
     {
         "id": "urn:ngsi-ld:wp",
         "type": "L",
-        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SM:smartmeter1"}
+        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SmartMeter:smartmeter1"}
     },
     {
         "id": "urn:ngsi-ld:wa",
         "type": "L",
-        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SM:smartmeter1"}
+        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SmartMeter:smartmeter1"}
     },
     {
         "id": "urn:ngsi-ld:wi",
         "type": "L",
-        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SM:smartmeter1"}
+        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SmartMeter:smartmeter1"}
     },
     {
         "id": "urn:ngsi-ld:gp",
         "type": "dm3",
-        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SM:smartmeter1"}
+        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SmartMeter:smartmeter1"}
     },
     {
         "id": "urn:ngsi-ld:ga",
         "type": "dm3",
-        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SM:smartmeter1"}
+        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SmartMeter:smartmeter1"}
     },
     {
         "id": "urn:ngsi-ld:gi",
         "type": "dm3",
-        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SM:smartmeter1"}
+        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SmartMeter:smartmeter1"}
     }
 ]'
 
@@ -245,7 +221,10 @@ curl -iX POST 'http://localhost:4041/iot/services' \
 }'
 
 
-
+curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/?type=Sensoren' \
+-H 'NGSILD-Tenant: openiot' \
+-H 'NGSILD-Path: /' \
+-H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
 
 
 
@@ -264,7 +243,7 @@ curl -iX POST 'http://localhost:4041/iot/devices' \
       "transport": "HTTP",
       "endpoint": "http://iot-sensors:3001/iot/pt",
        "static_attributes": [
-         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SM:smartmeter1"}
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SmartMeter:smartmeter1"}
         ]
     },
     {
@@ -275,7 +254,7 @@ curl -iX POST 'http://localhost:4041/iot/devices' \
       "transport": "HTTP",
       "endpoint": "http://iot-sensors:3001/iot/wp",
        "static_attributes": [
-         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SM:smartmeter1"}
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SmartMeter:smartmeter1"}
         ]
     },
     {
@@ -286,7 +265,7 @@ curl -iX POST 'http://localhost:4041/iot/devices' \
       "transport": "HTTP",
       "endpoint": "http://iot-sensors:3001/iot/wa",
        "static_attributes": [
-         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SM:smartmeter1"}
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SmartMeter:smartmeter1"}
         ]
     },
     {
@@ -297,7 +276,7 @@ curl -iX POST 'http://localhost:4041/iot/devices' \
       "transport": "HTTP",
       "endpoint": "http://iot-sensors:3001/iot/wi",
        "static_attributes": [
-         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SM:smartmeter1"}
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SmartMeter:smartmeter1"}
         ]
     },
     {
@@ -308,7 +287,7 @@ curl -iX POST 'http://localhost:4041/iot/devices' \
       "transport": "HTTP",
       "endpoint": "http://iot-sensors:3001/iot/gp",
        "static_attributes": [
-         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SM:smartmeter1"}
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SmartMeter:smartmeter1"}
         ]
     },
     {
@@ -319,7 +298,7 @@ curl -iX POST 'http://localhost:4041/iot/devices' \
       "transport": "HTTP",
       "endpoint": "http://iot-sensors:3001/iot/ga",
        "static_attributes": [
-         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SM:smartmeter1"}
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SmartMeter:smartmeter1"}
         ]
     },
     {
@@ -330,7 +309,7 @@ curl -iX POST 'http://localhost:4041/iot/devices' \
       "transport": "HTTP",
       "endpoint": "http://iot-sensors:3001/iot/gi",
        "static_attributes": [
-         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SM:smartmeter1"}
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SmartMeter:smartmeter1"}
         ]
     }
   ]
@@ -343,7 +322,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 --data-raw '{
   "description": "Notify me of all feedstock changes",
   "type": "Subscription",
-  "entities": [{"type": "Sensoren"}],
+  "entities": [{"type": "SmartMeter"}],
   "watchedAttributes": ["power", "waterConsumption", "gasConsumption"],
   "notification": {
     "attributes": ["power", "waterConsumption", "gasConsumption"],
