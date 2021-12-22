@@ -1,0 +1,360 @@
+// Befehle
+//Powershell
+  wsl -d docker-desktop sysctl -w vm.max_map_count=462144
+
+// Bash
+curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
+-H 'Content-Type: application/ld+json' \
+--data-raw '{
+    "id": "urn:ngsi-ld:SM:smartmeter1",
+    "type": "SM",
+    "category": {
+        "type": "Property",
+        "value": ["smartmeter"]
+    },
+    "address": {
+        "type": "Property",
+        "value": {
+            "streetAddress": "Bruno-Danek-Weg 2",
+            "addressRegion": "Herne",
+            "addressLocality": "Testhaus",
+            "postalCode": "44627"
+        },
+        "verified": {
+            "type": "Property",
+            "value": true
+        }
+    },
+    "location": {
+        "type": "GeoProperty",
+        "value": {
+             "type": "Point",
+             "coordinates": [7.258140, 51.543611]
+        }
+    },
+    "name": {
+        "type": "Property",
+        "value": "Elektrohaus 2"
+    },
+    "@context": "http://context/ngsi-context.jsonld"
+}'
+
+curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:SM:smartmeter1' \
+-H 'Accept: application/ld+json' \
+-H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+
+
+
+
+
+curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
+-H 'Content-Type: application/json' \
+-H 'Link: <'http://context/ngsi-context.jsonld'>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Accept: application/ld+json' \
+--data-raw '[
+    {
+      "id": "urn:ngsi-ld:pt",
+      "type": "TotalPower",
+      "category": {
+            "type": "Property",
+            "value": "sensor"
+      },
+      "power": {
+            "type": "Property",
+            "value": 25,
+            "unitCode": "WATT"
+      }
+    },
+    {
+      "id": "urn:ngsi-ld:wp",
+      "type": "WaterPulse",
+      "category": {
+            "type": "Property",
+            "value": "sensor"
+      },
+      "power": {
+            "type": "Property",
+            "value": 25,
+            "unitCode": "L"
+      }
+    },
+    {
+      "id": "urn:ngsi-ld:wa",
+      "type": "WaterAVGRate",
+      "category": {
+            "type": "Property",
+            "value": "sensor"
+      },
+      "power": {
+            "type": "Property",
+            "value": 25,
+            "unitCode": "L"
+      }
+    },
+    {
+      "id": "urn:ngsi-ld:wi",
+      "type": "WaterInstantRate",
+      "category": {
+            "type": "Property",
+            "value": "sensor"
+      },
+      "power": {
+            "type": "Property",
+            "value": 25,
+            "unitCode": "L"
+      }
+    },
+    {
+      "id": "urn:ngsi-ld:gp",
+      "type": "GasPulse",
+      "category": {
+            "type": "Property",
+            "value": "sensor"
+      },
+      "fillingLevel": {
+            "type": "Property",
+            "value": 25,
+            "unitCode": "dm3"
+      }
+    },
+    {
+      "id": "urn:ngsi-ld:ga",
+      "type": "GasAVGRate",
+      "category": {
+            "type": "Property",
+            "value": "sensor"
+      },
+      "electricityConsumption": {
+            "type": "Property",
+            "value": 25,
+            "unitCode": "dm3"
+      }
+    },
+    {
+      "id": "urn:ngsi-ld:gi",
+      "type": "GasInstantRate",
+      "category": {
+            "type": "Property",
+            "value": "sensor"
+      },
+      "electricityConsumption": {
+            "type": "Property",
+            "value": 25,
+            "unitCode": "dm3"
+      }
+    }
+]'
+
+
+
+
+
+
+
+curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
+-d 'options=update' \
+-H 'Content-Type: application/json' \
+-H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+--data-raw '[
+    {
+        "id": "urn:ngsi-ld:pt",
+        "type": "WATT",
+        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SM:smartmeter1"}
+    },
+    {
+        "id": "urn:ngsi-ld:wp",
+        "type": "L",
+        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SM:smartmeter1"}
+    },
+    {
+        "id": "urn:ngsi-ld:wa",
+        "type": "L",
+        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SM:smartmeter1"}
+    },
+    {
+        "id": "urn:ngsi-ld:wi",
+        "type": "L",
+        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SM:smartmeter1"}
+    },
+    {
+        "id": "urn:ngsi-ld:gp",
+        "type": "dm3",
+        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SM:smartmeter1"}
+    },
+    {
+        "id": "urn:ngsi-ld:ga",
+        "type": "dm3",
+        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SM:smartmeter1"}
+    },
+    {
+        "id": "urn:ngsi-ld:gi",
+        "type": "dm3",
+        "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SM:smartmeter1"}
+    }
+]'
+
+
+
+
+
+
+curl -iX POST 'http://localhost:4041/iot/services' \
+-H 'fiware-service: openiot' \
+-H 'fiware-servicepath: /' \
+-H 'Content-Type: application/json' \
+--data-raw '{
+    "services": [
+        {
+            "apikey": "U2UYP4uymjDQ62dNGAERvnmZMi",
+            "cbroker": "http://orion:1026",
+            "entity_type": "Sensoren",
+            "resource": "/iot/d",
+            "attributes": [
+                {
+                    "object_id": "pt", "type": "Property", "name": "pt"
+                },
+                {
+                    "object_id": "wp", "type": "Property", "name": "wp"
+                },
+                {
+                    "object_id": "wa", "type": "Property", "name": "wa"
+                },
+                {
+                    "object_id": "wi", "type": "Property", "name": "wi"
+                },
+                {
+                    "object_id": "gp", "type": "Property", "name": "gp"
+                },
+                {
+                    "object_id": "ga", "type": "Property", "name": "ga"
+                },
+                {
+                    "object_id": "gi", "type": "Property", "name": "gi"
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "category", "type": "Property", "value": "sensor"
+                },
+                {
+                    "name": "supportedProtocol", "type": "Property", "value": "ul20"
+                }
+            ]
+        }
+    ]
+}'
+
+
+
+
+
+
+
+curl -iX POST 'http://localhost:4041/iot/devices' \
+  -H 'fiware-service: openiot' \
+  -H 'fiware-servicepath: /' \
+  -H 'Content-Type: application/json' \
+--data-raw '{
+  "devices": [
+    {
+      "device_id": "pt",
+      "entity_name": "urn:ngsi-ld:Device:pt",
+      "entity_type": "Sensoren",
+      "protocol": "PDI-IoTA-UltraLight",
+      "transport": "HTTP",
+      "endpoint": "http://iot-sensors:3001/iot/pt",
+       "static_attributes": [
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SM:smartmeter1"}
+        ]
+    },
+    {
+      "device_id": "wp",
+      "entity_name": "urn:ngsi-ld:Device:wp",
+      "entity_type": "Sensoren",
+      "protocol": "PDI-IoTA-UltraLight",
+      "transport": "HTTP",
+      "endpoint": "http://iot-sensors:3001/iot/wp",
+       "static_attributes": [
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SM:smartmeter1"}
+        ]
+    },
+    {
+      "device_id": "wa",
+      "entity_name": "urn:ngsi-ld:Device:wa",
+      "entity_type": "Sensoren",
+      "protocol": "PDI-IoTA-UltraLight",
+      "transport": "HTTP",
+      "endpoint": "http://iot-sensors:3001/iot/wa",
+       "static_attributes": [
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SM:smartmeter1"}
+        ]
+    },
+    {
+      "device_id": "wi",
+      "entity_name": "urn:ngsi-ld:Device:wi",
+      "entity_type": "Sensoren",
+      "protocol": "PDI-IoTA-UltraLight",
+      "transport": "HTTP",
+      "endpoint": "http://iot-sensors:3001/iot/wi",
+       "static_attributes": [
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SM:smartmeter1"}
+        ]
+    },
+    {
+      "device_id": "gp",
+      "entity_name": "urn:ngsi-ld:Device:gp",
+      "entity_type": "Sensoren",
+      "protocol": "PDI-IoTA-UltraLight",
+      "transport": "HTTP",
+      "endpoint": "http://iot-sensors:3001/iot/gp",
+       "static_attributes": [
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SM:smartmeter1"}
+        ]
+    },
+    {
+      "device_id": "ga",
+      "entity_name": "urn:ngsi-ld:Device:ga",
+      "entity_type": "Sensoren",
+      "protocol": "PDI-IoTA-UltraLight",
+      "transport": "HTTP",
+      "endpoint": "http://iot-sensors:3001/iot/ga",
+       "static_attributes": [
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SM:smartmeter1"}
+        ]
+    },
+    {
+      "device_id": "gi",
+      "entity_name": "urn:ngsi-ld:Device:gi",
+      "entity_type": "Sensoren",
+      "protocol": "PDI-IoTA-UltraLight",
+      "transport": "HTTP",
+      "endpoint": "http://iot-sensors:3001/iot/gi",
+       "static_attributes": [
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:SM:smartmeter1"}
+        ]
+    }
+  ]
+}
+'
+
+curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+-H 'Content-Type: application/ld+json' \
+-H 'NGSILD-Tenant: openiot' \
+--data-raw '{
+  "description": "Notify me of all feedstock changes",
+  "type": "Subscription",
+  "entities": [{"type": "Sensoren"}],
+  "watchedAttributes": ["power", "waterConsumption", "gasConsumption"],
+  "notification": {
+    "attributes": ["power", "waterConsumption", "gasConsumption"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://quantumleap:8668/v2/notify",
+      "accept": "application/json"
+    }
+  },
+   "@context": "http://context/ngsi-context.jsonld"
+}'
+
+
+
