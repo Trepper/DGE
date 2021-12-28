@@ -31,6 +31,7 @@ curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
     {
       "id": "urn:ngsi-ld:pt",
       "type": "TotalPower",
+      "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SmartMeter:smartmeter1"},
       "category": {
             "type": "Property",
             "value": "sensor"
@@ -44,6 +45,7 @@ curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
     {
       "id": "urn:ngsi-ld:wp",
       "type": "WaterPulse",
+      "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SmartMeter:smartmeter1"},
       "category": {
             "type": "Property",
             "value": "sensor"
@@ -57,6 +59,7 @@ curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
     {
       "id": "urn:ngsi-ld:wa",
       "type": "WaterAVGRate",
+      "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SmartMeter:smartmeter1"},
       "category": {
             "type": "Property",
             "value": "sensor"
@@ -70,6 +73,7 @@ curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
     {
       "id": "urn:ngsi-ld:wi",
       "type": "WaterInstantRate",
+      "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SmartMeter:smartmeter1"},
       "category": {
             "type": "Property",
             "value": "sensor"
@@ -83,6 +87,7 @@ curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
     {
       "id": "urn:ngsi-ld:gp",
       "type": "GasPulse",
+      "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SmartMeter:smartmeter1"},
       "category": {
             "type": "Property",
             "value": "sensor"
@@ -96,6 +101,7 @@ curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
     {
       "id": "urn:ngsi-ld:ga",
       "type": "GasAVGRate",
+      "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SmartMeter:smartmeter1"},
       "category": {
             "type": "Property",
             "value": "sensor"
@@ -109,6 +115,7 @@ curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
     {
       "id": "urn:ngsi-ld:gi",
       "type": "GasInstantRate",
+      "controlledAsset": {"type": "Relationship", "object": "urn:ngsi-ld:SmartMeter:smartmeter1"},
       "category": {
             "type": "Property",
             "value": "sensor"
@@ -125,8 +132,8 @@ curl -X POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
 
 
 
-
-
+##########################################################
+// Wird nicht gebraucht
 curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
 -d 'options=update' \
 -H 'Content-Type: application/json' \
@@ -169,8 +176,23 @@ curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entityOperations/upsert' \
     }
 ]'
 
+##########################################
 
-
+curl -iX POST \
+  'http://localhost:4041/iot/services' \
+  -H 'Content-Type: application/json' \
+  -H 'fiware-service: openiot' \
+  -H 'fiware-servicepath: /' \
+  -d '{
+ "services": [
+   {
+     "apikey":      "U2UYP4uymjDQ62dNGAERvnmZMi",
+     "cbroker":     "http://orion:1026",
+     "entity_type": "Sensoren",
+     "resource":    "/iot/d"
+   }
+ ]
+}'
 
 
 
@@ -316,16 +338,17 @@ curl -iX POST 'http://localhost:4041/iot/devices' \
 }
 '
 
+
 curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 -H 'Content-Type: application/ld+json' \
 -H 'NGSILD-Tenant: openiot' \
 --data-raw '{
   "description": "Notify me of all feedstock changes",
   "type": "Subscription",
-  "entities": [{"type": "SmartMeter"}],
-  "watchedAttributes": ["power", "waterConsumption", "gasConsumption"],
+  "entities": [{"type": "Sensoren"}],
+  "watchedAttributes": ["pt", "wp", "wa", "wi", "gp", "ga", "gi"],
   "notification": {
-    "attributes": ["power", "waterConsumption", "gasConsumption"],
+    "attributes": ["pt", "wp", "wa", "wi", "gp", "ga", "gi"],
     "format": "normalized",
     "endpoint": {
       "uri": "http://quantumleap:8668/v2/notify",
@@ -336,4 +359,28 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 }'
 
 
+curl -X GET \
+  'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+  -H 'NGSILD-Tenant: openiot'
 
+  curl -iX POST \
+  'http://localhost:4200/_sql' \
+  -H 'Content-Type: application/json' \
+  -d '{"stmt":"SHOW SCHEMAS"}'
+
+  curl -X POST \
+  'http://localhost:4200/_sql' \
+  -H 'Content-Type: application/json' \
+  -d '{"stmt":"SHOW TABLES"}'
+
+ curl -X GET \
+  'http://localhost:8668/v2/entities/urn:ngsi-ld:Device:pt/attrs/power?limit=3' \
+  -H 'Accept: application/json' \
+  -H 'Fiware-Service: openiot' \
+  -H 'Fiware-ServicePath: /'
+
+
+  curl -iX POST \
+  'http://localhost:4200/_sql' \
+  -H 'Content-Type: application/json' \
+  -d '{"stmt":"SELECT wa FROM mtopeniot.etsensoren"}'
