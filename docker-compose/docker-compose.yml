@@ -8,7 +8,7 @@ services:
     ports:
         - "3004:80"
     volumes:
-        - "~/Studium/DGE/docker-compose/data-model/:/usr/local/apache2/htdocs/"
+        - "/home/lpekruhl/Studium/DGE/docker-compose/data-model/:/usr/local/apache2/htdocs/"
   orion:
     image: fiware/orion-ld:latest
     command: -dbhost orion-db
@@ -42,13 +42,13 @@ services:
       - IOTA_MQTT_PROTOCOL=mqtts
       - IOTA_MQTT_HOST=mqtt.scilabs.de
       - IOTA_MQTT_PORT=8883
-      #- IOTA_MQTT_CA=/ca.pem
+      - IOTA_MQTT_CA=/ca.pem
       - IOTA_MQTT_USERNAME=dge
       - IOTA_MQTT_PASSWORD=gNKWqGxdQFARvARa5CcS
       - IOTA_MQTT_QOS=2
     volumes:
-      - "~/Studium/DGE/MQTTBinding.js:/opt/iotaul/lib/bindings/MQTTBinding.js"
-      #- "/home/mike/Studium/DGE/ca.pem:/ca.pem"
+      - "/home/lpekruhl/Studium/DGE/MQTTBinding.js:/opt/iotaul/lib/bindings/MQTTBinding.js"
+      - "/home/lpekruhl/Studium/DGE/ca.pem:/ca.pem"
   orion-db:
     image: mongo:4.4
     networks:
