@@ -384,3 +384,73 @@ curl -X GET \
   'http://localhost:4200/_sql' \
   -H 'Content-Type: application/json' \
   -d '{"stmt":"SELECT wa FROM mtopeniot.etsensoren"}'
+
+    curl -iX POST \
+  'http://localhost:4200/_sql' \
+  -H 'Content-Type: application/json' \
+  -d '{"stmt":"SELECT time_index FROM mtopeniot.etsensoren"}'
+
+
+
+
+### Bei jedem docker-compose up ausführen
+
+
+
+  curl -iX POST 'http://localhost:4041/iot/services' \
+-H 'fiware-service: openiot' \
+-H 'fiware-servicepath: /' \
+-H 'Content-Type: application/json' \
+--data-raw '{
+    "services": [
+        {
+            "apikey": "U2UYP4uymjDQ62dNGAERvnmZMi",
+            "cbroker": "http://orion:1026",
+            "entity_type": "Sensoren",
+            "resource": "/iot/d",
+            "attributes": [
+                {
+                    "object_id": "pt", "type": "Property", "name": "pt"
+                },
+                {
+                    "object_id": "wp", "type": "Property", "name": "wp"
+                },
+                {
+                    "object_id": "wa", "type": "Property", "name": "wa"
+                },
+                {
+                    "object_id": "wi", "type": "Property", "name": "wi"
+                },
+                {
+                    "object_id": "gp", "type": "Property", "name": "gp"
+                },
+                {
+                    "object_id": "ga", "type": "Property", "name": "ga"
+                },
+                {
+                    "object_id": "gi", "type": "Property", "name": "gi"
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "category", "type": "Property", "value": "sensor"
+                },
+                {
+                    "name": "supportedProtocol", "type": "Property", "value": "ul20"
+                }
+            ]
+        }
+    ]
+}'
+
+curl -iX POST \
+  'http://localhost:4200/_sql' \
+  -H 'Content-Type: application/json' \
+  -d '{"stmt":"SELECT time_index FROM mtopeniot.etsensoren"}'
+
+### Neusten Wert nehmen
+
+curl -iX POST \
+  'http://localhost:4200/_sql' \
+  -H 'Content-Type: application/json' \
+  -d '{"stmt":"DELETe FROM mtopeniot.etsensoren where time_index>1641378106478"}'

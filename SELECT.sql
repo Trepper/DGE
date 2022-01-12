@@ -20,3 +20,8 @@ WHERE
   $__timeFilter(time_index)
 GROUP BY 1
 ORDER BY 1
+
+
+
+SELECT SUM("integral") AS sum FROM ( SELECT INTEGRAL("mean", 5m) AS integral FROM ( SELECT MEAN("pt") AS mean FROM "mtopeniot.etsensoren" WHERE "pt" < 0 GROUP BY time(5m) fill(0) ) ) GROUP BY time(1d)
+
